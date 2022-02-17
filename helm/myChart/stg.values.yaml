@@ -1,7 +1,13 @@
 deployment:
-  image: {{image}}
   name: applicationName
   env: staging
+  resources: 
+    requests:
+      memory: 
+      cpu:
+    limits:
+      memory: 
+      cpu:
 
 service:
   name: applicationName

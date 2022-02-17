@@ -2,11 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{.Values.deployment.name}}
-  namespace: youNamespace
   labels:
     name: {{.Values.deployment.name}}
 spec:
-  replicas: {{.Values.deployment.replicas | default:1 }}
+  replicas: {{default "1" .Values.deployment.replicas  }}
   selector:
     matchLabels:
       name: {{.Values.deployment.name}}
@@ -20,11 +19,11 @@ spec:
         image: {{.Values.deployment.image}}
         resources:
           requests:
-            memory: {{.Values.deployment.resources.requests.memory | default:500Mi }}
-            cpu: {{.Values.deployment.resources.requests.cpu | default:500m }}
+            memory: {{ .Values.deployment.resources.requests.memory }}
+            cpu: {{ .Values.deployment.resources.requests.cpu }}
           limits:
-            memory: {{.Values.deployment.resources.limits.memory | default:700Mi }}
-            cpu: {{.Values.deployment.resources.limits.cpu | default:700m }}
+            memory: {{ .Values.deployment.resources.limits.memory }}
+            cpu: {{ .Values.deployment.resources.limits.cpu }}
         lifecycle:
           preStop:
             exec:
@@ -46,3 +45,5 @@ spec:
             scheme: HTTP
             path: /
             port: 80 
+
+

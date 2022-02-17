@@ -1,7 +1,13 @@
 deployment:
-  image: {{image}}
   name: applicationName
   env: development
+  resources: 
+    requests:
+      memory: 
+      cpu:
+    limits:
+      memory: 
+      cpu:
 
 service:
   name: applicationName
