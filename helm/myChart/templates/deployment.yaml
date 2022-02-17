@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.deployment.name}}
+  namespace: youNamespace
+  labels:
+    name: {{.Values.deployment.name}}
+spec:
+  replicas: {{.Values.deployment.replicas | default:1 }}
+  selector:
+    matchLabels:
+      name: {{.Values.deployment.name}}
+  template:
+    metadata:
+      labels:
+        name: {{.Values.deployment.name}}
+    spec:
+      containers:
+      - name: {{.Values.deployment.name}}
+        image: {{.Values.deployment.image}}
+        resources:
+          requests:
+            memory: {{.Values.deployment.resources.requests.memory | default:500Mi }}
+            cpu: {{.Values.deployment.resources.requests.cpu | default:500m }}
+          limits:
+            memory: {{.Values.deployment.resources.limits.memory | default:700Mi }}
+            cpu: {{.Values.deployment.resources.limits.cpu | default:700m }}
+        lifecycle:
+          preStop:
+            exec:
+              command: ["sleep", "20"]
+        env:
+        - name: "ASPNETCORE_ENVIRONMENT" 
+          value: {{.Values.deployment.env}}
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 60
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 80
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 60
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 80 

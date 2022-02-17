@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.ingress.name}}
+  namespace: youNamespace
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/session-cookie-expires: "60"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "60"
+spec:
+  rules:
+  - host: {{.Values.ingress.serviceName}}
+    http:
+      paths:
+      - backend:
+          serviceName: {{.Values.ingress.serviceName}}
+          servicePort: 80
+        path: 
+
+
+        

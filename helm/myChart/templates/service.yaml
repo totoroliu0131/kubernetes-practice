@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.service.name}}
+  namespace: youNamespace
+  labels:
+    name: {{.Values.service.name}}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    name: {{.Values.service.name}}

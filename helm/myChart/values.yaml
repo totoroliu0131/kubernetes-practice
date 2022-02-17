@@ -1,0 +1,12 @@
+deployment:
+  image: {{image}}
+  name: applicationName
+  env: development
+
+service:
+  name: applicationName
+
+ingress:
+  name: ingress-applicationName
+  serviceName: applicationName
+  host: application-host
